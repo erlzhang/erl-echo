@@ -6,7 +6,7 @@ import {
   CATEGORY,
   WRITING_MODE
 } from '@/const/book';
-import Book from '@/models/Book';
+import Book from '@/models/book';
 
 export default function NewBookDialog(
   { onClose, onSubmit }
