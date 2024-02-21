@@ -1,0 +1,166 @@
+.form-item {
+  margin-bottom: 10px;
+}
+.form-item.form-item-row {
+  display: flex;
+  justify-content: space-between;
+}
+.form-item.form-item-inline {
+  display: inline-block;
+  margin: 10px 0 0;
+}
+.form-item label {
+  vertical-align: middle;
+  float: left;
+  color: #606266;
+  line-height: 30px;
+  padding: 0 12px 0 0;
+  box-sizing: border-box;
+  /* width: 100px; */
+}
+.form-item.form-item-inline label {
+  display: inline-block;
+  margin-right: 30px;
+  margin-right: 4px;
+}
+.form-item-content {
+  line-height: 30px;
+  position: relative;
+  font-size: 16px;
+}
+.form-item.form-item-inline .form-item-content {
+  display: inline-block;
+}
+.form-control {
+  border: 1px solid var(--border-color);
+  padding: 0 15px;
+  border-radius: 4px;
+  line-height: 35px;
+  height: 35px;
+  -webkit-appearance: none;
+  width: 100%;
+}
+.form-control:focus-visible {
+  outline: none;
+}
+textarea.form-control {
+  height: 100px;
+  font-family: inherit;
+}
+.select-options {
+  position: absolute;
+  z-index: 1001;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+  box-sizing: border-box;
+  margin: 5px 0;
+  z-index: 10000;
+}
+.btn {
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn + .btn {
+  margin-left: 10px;
+}
+.btn svg {
+  vertical-align: middle;
+  float: left;
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+.btn-error {
+  background-color: var(--red);
+  color: white;
+}
+.btn-block {
+  width: 100%;
+  text-align: center;
+}
+.btn.loading {
+  cursor: not-allowed;
+  opacity: 0.7;
+  display: flex;
+  justify-content: center;
+}
+.btn.loading svg {
+  animation: 2s linear spin infinite;
+  margin-right: 5px;
+}
+.uploader {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  border: 2px dashed var(--border-color);
+  cursor: pointer;
+  background-position: center;
+  background-size: cover;
+}
+
+.select-icon svg {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  width: 20px;
+  height: 20px;
+  color: var(--light-gray);
+}
+
+.select-tag {
+  display: inline-block;
+}
+.select-tag .form-control {
+  height: auto;
+  line-height: 1;
+  padding: 7px 18px;
+  background-color: var(--border-color);
+  border-radius: 3px;
+  font-size: 0.875rem;
+  color: var(--dark);
+  border: 0;
+  position: relative;
+}
+.select-tag .form-control > svg {
+  margin-right: 4px;
+  vertical-align: bottom;
+}
+.select-tag .select-icon svg {
+  right: 0;
+  top: 7px;
+  visibility: hidden;
+  width: 15px;
+  height: 15px;
+}
+.select-tag:hover .select-icon svg {
+  visibility: visible;
+}
+.select-tag + .select-tag {
+  margin-left: 15px;
+}
+.select-options {
+  overflow-y: auto;
+  min-width: 100px;
+  border-radius: 3px;
+  outline: 0;
+}
+.select-option {
+  padding: 8px 10px;
+  cursor: default;
+}
+.form-item-inline .select {
+  width: 150px;
+}

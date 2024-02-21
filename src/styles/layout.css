@@ -1,0 +1,33 @@
+@import './globals.css';
+
+.container {
+  width: 100%;
+  min-height: 100%;
+  padding-top: var(--header-height);
+}
+.header {
+  height: var(--header-height);
+  border-bottom: 1px solid var(--border-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 50px;
+  line-height: 40px;
+  background-color: white;
+}
+.header .logo {
+  font-size: 1.35rem;
+  color: #4A4D71;
+}
+.header .logo img {
+  margin-right: 10px;
+  vertical-align: bottom;
+}
+.header-inner {
+  display: flex;
+}
+.body {
+  width: 100%;
+  height: 100%;
+}

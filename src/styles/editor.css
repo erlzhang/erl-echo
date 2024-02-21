@@ -1,0 +1,181 @@
+.tiptap {
+  font-size: 18px;
+}
+.tiptap p {
+  margin-bottom: 10px;
+  line-height: 1.75rem;
+}
+.tiptap:focus-visible {
+  outline: none;
+}
+.tiptap h1,
+.tiptap h2,
+.tiptap h3,
+.tiptap h4,
+.tiptap h5,
+.tiptap h6 {
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+.tiptap a {
+  text-decoration: underline;
+  margin: 0 3px;
+  color: var(--gray);
+}
+.tiptap img {
+  max-width: 100%;
+  height: auto;
+}
+.tiptap img.ProseMirror-selectednode {
+  outline: 3px solid #68CEF8;
+}
+.tiptap h1 {
+  margin-bottom: 2.5rem;
+}
+.tiptap ul,
+.tiptap ol {
+  padding-left: 30px;
+}
+.tiptap blockquote {
+  padding-left: 15px;
+  border-left: 3px solid var(--dark);
+}
+.tiptap .footnotes {
+  border-top: 1px solid var(--lighter);
+  margin-top: 30px;
+  padding-top: 20px;
+  font-size: 14px;
+  color: var(--gray);
+}
+
+/* Placeholder (on every new line) */
+.tiptap h1.is-empty::before,
+.tiptap p.is-empty:first-child::before  {
+  content: attr(data-placeholder);
+  float: left;
+  color: #ced4da;
+  pointer-events: none;
+  height: 0;
+}
+.actions {
+  position: sticky;
+  margin-left: -60px;
+  top: 224px;
+  width: 50px;
+}
+.action-btn {
+  padding: 5px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+.action-btn svg {
+  vertical-align: bottom;
+}
+.action-btn:hover {
+  background-color: var(--lighter);
+}
+.bubble-menu {
+  display: inline-flex;
+  position: relative;
+  align-items: stretch;
+  height: 32px;
+  background: white;
+  font-size: 14px;
+  line-height: 1.2;
+  border-radius: 5px;
+  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+  pointer-events: auto;
+}
+.bubble-menu button {
+  appearance: none;
+  background: none;
+  border: 0;
+  color: var(--grayer);
+  vertical-align: bottom;
+  /* margin-top: 3px; */
+  border-right: 1px solid var(--border-color);
+  padding: 0 5px;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 32px;
+  
+}
+.bubble-link-input {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  background: white;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.2;
+  border-radius: 5px;
+  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+}
+.bubble-menu button svg {
+  vertical-align: middle;
+  margin-top: -4px;
+}
+.bubble-link-input .form-control {
+  padding-right: 30px;
+}
+.bubble-link-input button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.bubble-menu button:last-child {
+  border-right: none;
+}
+.bubble-menu button:hover,
+.bubble-menu button.is-active {
+  background-color: var(--lighter);
+}
+.new-block-btn {
+  position: absolute;
+  top: -12px;
+  left: -40px;
+  appearance: none;
+  background: none;
+  border: 0;
+  color: var(--gray);
+  cursor: pointer;
+  border-radius: 3px;
+}
+.new-block-btn svg {
+  vertical-align: middle;
+}
+.new-block-btn:hover {
+  background-color: var(--lighter);
+}
+.actions-menu {
+  width: 130px;
+  border-radius: 5px;
+  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+  pointer-events: auto;
+  background-color: white;
+}
+.action-btn {
+  appearance: none;
+  background: none;
+  border: 0;
+  color: var(--grayer);
+  vertical-align: bottom;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 32px;
+  width: 100%;
+  font-size: 14px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+.action-btn svg {
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
+}
+.action-btn.active {
+  background: #f2f3f5;
+}
