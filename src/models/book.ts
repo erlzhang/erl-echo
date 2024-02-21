@@ -2,7 +2,7 @@ import {
   getCurrentYear
 } from '@/utils/date';
 import Chapter from './chapter';
-import Base from './Base';
+import Base from './base';
 
 import {
   create,
