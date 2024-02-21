@@ -9,7 +9,7 @@ import NewCard from '@/components/new-card';
 import { useRouter, useParams } from 'next/navigation'
 
 import Chapter from '@/models/chapter';
-import Summary from '@/models/Summary';
+import Summary from '@/models/summary';
 import store from '@/core/store';
 
 export default function(
