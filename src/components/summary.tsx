@@ -1,6 +1,7 @@
 // "use client";
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
+import { BookContext } from '@/contexts/bookContext'
 import update from 'immutability-helper'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -9,41 +10,29 @@ import NewCard from '@/components/new-card';
 import { useRouter, useParams } from 'next/navigation'
 
 import Chapter from '@/models/chapter';
-import Summary from '@/models/summary';
-import store from '@/core/store';
 
-export default function(
-  { book }:
-  {
-    book: string,
-  }
-) {
+export default function() {
   // const cardsMap = new Map<number, any>();
   const router = useRouter()
   const params = useParams()
 
-  const [summary, setSummary] = useState<Summary>();
+  const book = params.book;
+
+  const context = useContext(BookContext);
+
+  const { summary } = context;
+
+  // const [summary, setSummary] = useState<Summary>();
   const [cards, setCards] = useState<Chapter[]>([]);
 
   useEffect(() => {
-    if (!book) return;
-    Summary.get(book)
-      .then(_summary => {
-        store.summary = _summary;
-        setSummary(_summary);
-        setCards(_summary.data);
-      });
-    
-    const handleChapterChanged = (data) => {
-      setCards([...data]);
+    console.warn('on context changed', summary);
+    if (!summary) {
+      return;
     }
 
-    store.$on('chapter', handleChapterChanged)
-
-    return () => {
-      store.$off('chapter', handleChapterChanged);
-    }
-  }, [book]);
+    setCards([...summary.data]);
+  }, [context])
 
   const handleNewChapter = (val: string) => {
     const chapter = new Chapter({

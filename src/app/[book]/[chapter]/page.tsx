@@ -1,7 +1,7 @@
 "use client";
 import { Editor } from '@/components/editor/editor';
-import { useCallback, useEffect, useState, useRef } from 'react';
-
+import { useCallback, useEffect, useState, useRef, useContext } from 'react';
+import { BookContext } from '@/contexts/bookContext'
 import Chapter from '@/models/chapter';
 import { Button } from '@/components/ui/form';
 import Confirm from '@/components/ui/confirm';
@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 
 import Title from '@/components/editor/title'
 import EditableField from '@/components/ui/editable-field';
-import store from '@/core/store';
 import {
   getWordCount
 } from '@/utils/word';
@@ -25,6 +24,7 @@ export default function ChapterPage(
   }
 ) {
   const router = useRouter();
+  const { summary, updateSummary, book, updateBook } = useContext(BookContext);
   const [chapter, setChapter] = useState<Chapter | null>(null);
   const [content, setContent] = useState<string>('');
   const [wordCount, setWordCount] = useState<number>(0);
@@ -33,73 +33,75 @@ export default function ChapterPage(
   const editorRef = useRef()
 
   useEffect(() => {
-    if (!params.chapter) return;
+    if (!params.chapter || !summary || chapter) return;
 
-    const getChapter = () => {
-      const _chapter = store.getChapter(params.chapter);
-      setChapter(_chapter);
-      _chapter.getContent()
-        .then((_content: string) => {
-          setWordCount(_chapter.wordCount);
-          setContent(_content);
-        })
-    }
-
-    if (store.summary) {
-      getChapter();
-    }
-
-    store.$on('summary', getChapter);
-
-    return () => {
-      store.$off('summary', getChapter);
-    }
-  }, [params.chapter])
+    const _chapter = summary.getChapter(params.chapter);
+    setChapter(_chapter);
+    _chapter.getContent()
+      .then((_content: string) => {
+        setWordCount(_chapter.wordCount);
+        setContent(_content);
+      })
+  }, [params.chapter, summary])
 
   const handleChange = useCallback((_content:string) => {
     setWordCount(getWordCount(_content));
     setContent(_content);
-    // chapter?.saveContent(content);
   }, [chapter]);
+
+  const updateBookWordcount = useCallback(() => {
+    const wordCount = summary?.getWordCount()
+    book?.update({
+      wordCount: wordCount,
+      updatedAt: new Date()
+    }).then(() => {
+      updateBook(book)
+    })
+  }, [book, summary])
 
   const saveContent = useCallback(() => {
     setSaving(true);
     chapter?.saveContent(content)
       .then(() => {
-        store.updateChapter(params.chapter, {
+        summary?.updateChapter(params.chapter, {
           wordCount: getWordCount(content),
           updatedAt: new Date()
         }).then((_chapter: Chapter) => {
-          setChapter(_chapter);
-          store.updateWordCount();
+          setChapter(_chapter.clone())
           setSaving(false);
-        })
+          updateBookWordcount()
+        });
       })
   }, [chapter, content])
 
-  const handleRemove = () => {
-    store.removeChapter(params.chapter)
+  const handleRemove = useCallback(() => {
+    summary?.remove(params.chapter)
       .then(() => {
         setShowConfirm(false);
         router.push(`/${params.book}`);
+        updateSummary(summary)
+        updateBookWordcount()
       })
-  }
+  }, [summary])
 
-  const handleTitleChange = (val: string) => {
-    store.updateChapter(params.chapter, {
+  const handleTitleChange = useCallback((val: string) => {
+    summary?.updateChapter(params.chapter, {
       title: val.replace(/<[^>]+>/g,"")
-    }).then((_chapter: Chapter) => {
-      setChapter(_chapter);
+    }).then((_chapter) => {
+      updateSummary(summary)
+      setChapter(_chapter.clone())
     })
-  }
+  }, [summary])
 
-  const handleSlugChange = (e: any) => {
-    store.updateChapter(params.chapter, {
+  const handleSlugChange = useCallback((e: any) => {
+    summary?.updateChapter(params.chapter, {
       slug: e.target.value
-    }).then((_chapter: Chapter) => {
-      setChapter(_chapter);
+    }).then((_chapter) => {
+      updateSummary(summary)
+      setChapter(_chapter.clone())
     })
-  }
+  }, [summary]);
+
   return (
     <>
       {
@@ -123,7 +125,7 @@ export default function ChapterPage(
                 placeholder=""
               />
             </div>
-            <div>
+            <div className="chapter-actions">
               <span className="word-count">{ wordCount } 字</span>
               <Button
                 type="primary"
@@ -153,7 +155,6 @@ export default function ChapterPage(
               />
             </div>
           </div>
-          
         </>
       }
     </>

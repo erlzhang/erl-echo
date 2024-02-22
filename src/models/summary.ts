@@ -27,8 +27,13 @@ export default class Summary {
 
   getChapter(id: string) {
     return this._data.get(id);
-    // console.warn('in get chapter', id, this.data);
-    // return this.data.find(chapter => chapter.id === id);
+  }
+
+  async updateChapter(id: string, obj: any) {
+    const chapter = this.getChapter(id);
+    chapter.update(obj)
+    await this.update();
+    return chapter;
   }
 
   getWordCount() {
@@ -47,7 +52,8 @@ export default class Summary {
     return chapter.id;
   }
 
-  async remove(chapter: Chapter) {
+  async remove(id: string) {
+    const chapter = this.getChapter(id);
     this.data = this.data.filter(item => item !== chapter);
     await removePost(chapter.book, chapter.id);
     return this.update();

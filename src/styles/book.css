@@ -115,6 +115,10 @@ li.chapter-item.dragging {
   line-height: 1.5rem;
   font-size: 0.85rem;
 }
+.chapter-actions {
+  display: flex;
+  align-items: center;
+}
 .chapter-title {
   font-size: 2.35rem;
   margin: 1rem 0 2rem;
