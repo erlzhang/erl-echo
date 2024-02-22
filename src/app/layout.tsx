@@ -1,6 +1,6 @@
 import Header from '@/components/header'
 import "@/styles/layout.css";
-// import AuthContextProvider from "../../contexts/authContext";
+import AuthContextProvider from "@/contexts/authContext";
 
 export const metadata = {
   title: 'Echo',
@@ -17,11 +17,11 @@ export default function RootLayout({
       <body>
         <div className="container">
           <Header></Header>
-          {/* <AuthContextProvider> */}
+          <AuthContextProvider>
             <div className="body">
               {children}
             </div>
-          {/* </AuthContextProvider> */}
+          </AuthContextProvider>
         </div>
       </body>
     </html>
