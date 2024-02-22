@@ -25,6 +25,7 @@ const AuthContextProvider = ({ children }) => {
           router.push('/');
         }
         NetlifyIdentityWidget.open();
+        // router.push('/');
       } else {
         if (pathname === '/') {
           router.push('/dashboard');
@@ -33,9 +34,12 @@ const AuthContextProvider = ({ children }) => {
     });
 
     NetlifyIdentityWidget.on("login", (user) => {
+      alert('on login')
       setUser(user);
-      NetlifyIdentityWidget.close();
-      router.push('/dashboard');
+      if (pathname === '/') {
+        NetlifyIdentityWidget.close();
+        router.push('/dashboard');
+      }
     });
 
     // on logout
