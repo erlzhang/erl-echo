@@ -4,8 +4,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import Select from '@/components/ui/select';
 import Confirm from '@/components/ui/confirm';
 import { GoTrash } from "react-icons/go";
-import { FiDownloadCloud } from "react-icons/fi";
-import { LiaArrowRightSolid } from "react-icons/lia";
+// import { FiDownloadCloud } from "react-icons/fi";
+import { LiaArrowRightSolid, LiaReadme } from "react-icons/lia";
+// import { LiaReadme } from "react-icons/lia";
 
 import Book, { Status } from '@/models/book';
 import {
@@ -27,7 +28,6 @@ export default function BookPage(
     }
   }
 ) {
-  const slug = params.book;
   const router = useRouter();
 
   const [book, setBook] = useState<Book | null>(null);
@@ -182,13 +182,13 @@ export default function BookPage(
             <span>更新于 { book.updatedAt.toLocaleString() }</span>
           </div>
           <div className="book-actions">
-            <div
+            {/* <div
               className="book-action book-action-default"
               onClick={exportBook}
             >
               <FiDownloadCloud></FiDownloadCloud>
               Export Book
-            </div>
+            </div> */}
             <div
               className="book-action book-action-danger"
               onClick={() => setShowConfirm(true)}
@@ -196,6 +196,14 @@ export default function BookPage(
               <GoTrash />
               Delete Book
             </div>
+            {/* <div
+              className="book-action book-action-danger"
+            >
+              <a href={`https://erl.im/` +}>
+                <LiaReadme />
+                Preview
+              </a>
+            </div> */}
           </div>
         </div>
       }
