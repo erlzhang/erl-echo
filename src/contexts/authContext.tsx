@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext, useState, useEffect } from "react";
-import { netlifyIdentity } from "netlify-identity-widget";
-import { useRouter } from "next/router";
+import * as NetlifyIdentityWidget from "netlify-identity-widget"
+import { useRouter } from "next/navigation";
 
 export const AuthContext = createContext({
   user: null,
@@ -16,27 +16,53 @@ const AuthContextProvider = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    netlifyIdentity.on('init', user => {
+    NetlifyIdentityWidget.on('init', user => {
       console.log('user', user);
       if (!user) {
-        router.push('/');
+        if (router.pathname === '/') {
+          NetlifyIdentityWidget.open();
+        } else {
+          router.push('/');
+          NetlifyIdentityWidget.open();
+        }
+        // router.push('/');
+      } else {
+        if (router.pathname === '/') {
+          router.push('/dashboard');
+        }
       }
     });
 
-    netlifyIdentity.on("login", (user) => {
+    NetlifyIdentityWidget.on("login", (user) => {
       setUser(user);
-      netlifyIdentity.close();
+      NetlifyIdentityWidget.close();
+      router.push('/dashboard');
     });
 
     // on logout
-    netlifyIdentity.on("logout", (user) => {
+    NetlifyIdentityWidget.on("logout", (user) => {
       setUser(null);
+      router.push('/');
+      NetlifyIdentityWidget.open();
     });
 
-    netlifyIdentity.init();
+    NetlifyIdentityWidget.init();
   }, []);
 
-  return <AuthContext.Provider>{children}</AuthContext.Provider>;
+  const logout = () => {
+    NetlifyIdentityWidget.logout();
+  };
+
+  const context = {
+    logout,
+    user,
+  };
+
+  return (
+    <AuthContext.Provider value={context}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthContextProvider;
