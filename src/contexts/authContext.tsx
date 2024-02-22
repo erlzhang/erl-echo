@@ -17,9 +17,7 @@ const AuthContextProvider = ({ children }) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    console.log('pathname', pathname, router);
     NetlifyIdentityWidget.on('init', user => {
-      console.log('user', user);
       if (!user) {
         if (pathname !== '/') {
           router.push('/');
@@ -34,7 +32,6 @@ const AuthContextProvider = ({ children }) => {
     });
 
     NetlifyIdentityWidget.on("login", (user) => {
-      alert('on login')
       setUser(user);
       if (pathname === '/') {
         NetlifyIdentityWidget.close();
