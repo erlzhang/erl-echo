@@ -33,6 +33,7 @@
     "lodash": "^4.17.21",
     "lowlight": "^3.1.0",
     "markdown-it": "^14.0.0",
+    "netlify-identity-widget": "^1.9.2",
     "next": "14.0.4",
     "react": "^18",
     "react-contenteditable": "^3.3.7",
@@ -46,6 +47,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/netlify-identity-widget": "^1.9.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

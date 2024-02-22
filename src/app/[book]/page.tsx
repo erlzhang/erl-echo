@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect, useRef } from 'react';
-
+import React, { useState, useContext } from 'react';
+import { BookContext } from '@/contexts/bookContext'
 import Select from '@/components/ui/select';
 import Confirm from '@/components/ui/confirm';
 import { GoTrash } from "react-icons/go";
@@ -8,7 +8,7 @@ import { GoTrash } from "react-icons/go";
 import { LiaArrowRightSolid, LiaReadme } from "react-icons/lia";
 // import { LiaReadme } from "react-icons/lia";
 
-import Book, { Status } from '@/models/book';
+import { Status } from '@/models/book';
 import {
   STATUS,
   CATEGORY,
@@ -16,67 +16,31 @@ import {
 } from '@/const/book';
 import { useRouter } from 'next/navigation';
 
-// import BookExporter from '@/utils/book-exporter';
 import EditableField from '@/components/ui/editable-field';
-import store from '@/core/store';
 
-export default function BookPage(
-  {params}:
-  {
-    params: {
-      book: string
-    }
-  }
-) {
+export default function BookPage() {
   const router = useRouter();
 
-  const [book, setBook] = useState<Book | null>(null);
+  const { book, updateBook } = useContext(BookContext);
+
   const [showConfirm, setShowConfirm] = useState(false);
-
-  useEffect(() => {
-    if (book != null) {
-      return;
-    }
-
-    const handleBook = (_book: Book) => {
-      setBook(_book);
-    }
-
-    if (store.book) {
-      handleBook(store.book);
-    }
-    store.$on('book', handleBook)
-
-    return () => {
-      store.$off('book', handleBook)
-    }
-  }, [book]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     book?.update({ [name]: value })
       .then(res => {
-        const _book = book.clone();
-        setBook(_book);
-        store.book = _book;
+        updateBook(book);
       });
   }
 
   const setStatus = (val: Status) => {
-    // book.update(val);
-    // setBook(book?.clone());
     handleChange({ target: { name: 'status', value: val } })
   }
 
   const handleRemove = (e) => {
     book?.remove();
     setShowConfirm(false);
-    router.push('/');
-  }
-
-  const exportBook = () => {
-    // const exporter = new BookExporter(id);
-    // exporter.export();
+    router.push('/dashboard');
   }
 
   return (
