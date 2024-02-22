@@ -17,15 +17,19 @@ export default function() {
             Echo
           </Link>
         </div>
-        <div className="user-info">
-          Hello, {user.name}!
-          <Button
-            onClick={logout}
-            style={{
-              textDecoration: 'underline'
-            }}
-          >LogOut</Button>
-        </div>
+        {
+          user &&
+          <div className="user-info">
+            Hello, {user.name}!
+            <Button
+              onClick={logout}
+              style={{
+                textDecoration: 'underline'
+              }}
+            >LogOut</Button>
+          </div>
+        }
+        
     </header>
   )
 }
