@@ -34,7 +34,6 @@ const AuthContextProvider = ({ children }) => {
     });
 
     NetlifyIdentityWidget.on("login", (user) => {
-      alert('on login')
       setUser(user);
       if (pathname === '/') {
         NetlifyIdentityWidget.close();
