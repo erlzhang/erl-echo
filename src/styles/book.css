@@ -17,7 +17,7 @@
 .summary-header {
   border-bottom: 1px solid var(--border-color);
   color: var(--default);
-  margin-bottom: 7px;
+  margin-bottom: 0;
   padding: 15px;
 }
 .summary-header a {
@@ -35,18 +35,22 @@
   font-size: 16px;
   list-style: none;
   margin: 0;
-  padding: 0 0 20px;
+  padding: 0;
   transition: top .5s ease;
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
+  margin-bottom: -1px;
 }
 li.chapter-item {
   list-style: none;
-  padding: 10px 15px 10px 10px;
+  padding: 10px 15px 10px 0;
   border-bottom: 1px solid var(--border-color);
   position: relative;
   border-left: 6px solid transparent;
+}
+li.chapter-item:hover {
+  border-left-color: var(--light);
 }
 li.chapter-item.active {
   border-left-color: var(--blue);

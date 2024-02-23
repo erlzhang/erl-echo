@@ -1,9 +1,9 @@
 .tiptap {
-  font-size: 18px;
+  font-size: 17px;
 }
 .tiptap p {
   margin-bottom: 10px;
-  line-height: 1.75rem;
+  line-height: 1.5rem;
 }
 .tiptap:focus-visible {
   outline: none;

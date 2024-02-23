@@ -43,11 +43,11 @@ export default function Card(
       const hoverClientX = clientOffset.x - hoverBoundingRect.left
 
       if (dragIndex === hoverIndex) {
-        if (hoverClientX > 35) {
+        if (hoverClientX > 100) {
           // 向右移动
           moveLevel(dragIndex, 1);
           // console.warn('drag to right', dragIndex, hoverClientX);
-        } else if (hoverClientX < 10) {
+        } else if (hoverClientX < 90) {
           moveLevel(dragIndex, 0);
         }
         return
@@ -63,11 +63,11 @@ export default function Card(
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return
       }
-      if (hoverClientX > 35) {
+      if (hoverClientX > 100) {
         // 向右移动
         moveLevel(dragIndex, 1);
         // console.warn('drag to right', dragIndex, hoverClientX);
-      } else if (hoverClientX < 10) {
+      } else if (hoverClientX < 90) {
         moveLevel(dragIndex, 0);
       }
 
@@ -97,11 +97,11 @@ export default function Card(
       ref={ref}
       data-handler-id={handlerId}
       style={{
-        paddingLeft: (10 + 20 * level) + 'px'
+        paddingLeft: (5 + 20 * level) + 'px'
       }}
     >
       <Link href={path}>
-        <div className="drag-handler"></div>
+        {/* <div className="drag-handler"></div> */}
         {
           text ?
           text :

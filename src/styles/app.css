@@ -24,6 +24,12 @@
   padding: 10px;
   position: relative;
   margin-bottom: 2em;
+  transition: all 0.35s ease-in;
+}
+.book-card:hover {
+  background-color: var(--lightest);
+  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 2px 4px;
+  border-color: transparent;
 }
 .book-card.new-card-form {
   box-shadow: rgba(68, 74, 87, 0.05) 0px 2px 6px 0px, rgba(68, 74, 87, 0.1) 0px 1px 3px 0px;
@@ -74,6 +80,8 @@
   position: absolute;
   right: 0;
   top: 18px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
 }
 
 .book-list {
