@@ -4,9 +4,10 @@ import { BookContext } from '@/contexts/bookContext'
 import Select from '@/components/ui/select';
 import Confirm from '@/components/ui/confirm';
 import { GoTrash } from "react-icons/go";
-// import { FiDownloadCloud } from "react-icons/fi";
+import { FiDownloadCloud } from "react-icons/fi";
 import { LiaArrowRightSolid, LiaReadme } from "react-icons/lia";
 // import { LiaReadme } from "react-icons/lia";
+import BookExporter from '@/utils/book-exporter';
 
 import { Status } from '@/models/book';
 import {
@@ -21,7 +22,7 @@ import EditableField from '@/components/ui/editable-field';
 export default function BookPage() {
   const router = useRouter();
 
-  const { book, updateBook } = useContext(BookContext);
+  const { book, summary, updateBook } = useContext(BookContext);
 
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -41,6 +42,14 @@ export default function BookPage() {
     book?.remove();
     setShowConfirm(false);
     router.push('/dashboard');
+  }
+
+  const exportBook = () => {
+    if (!book || !summary) {
+      return;
+    }
+    const exporter = new BookExporter(0);
+    exporter.export(book, summary);
   }
 
   return (
@@ -146,13 +155,13 @@ export default function BookPage() {
             <span>更新于 { book.updatedAt.toLocaleString() }</span>
           </div>
           <div className="book-actions">
-            {/* <div
+            <div
               className="book-action book-action-default"
               onClick={exportBook}
             >
               <FiDownloadCloud></FiDownloadCloud>
               Export Book
-            </div> */}
+            </div>
             <div
               className="book-action book-action-danger"
               onClick={() => setShowConfirm(true)}

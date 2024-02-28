@@ -35,7 +35,7 @@ class Chapter extends Base {
     this.fromJson(obj);
   }
 
-  update(obj) {
+  update(obj: any) {
     Object.assign(this, obj);
     // db.chapters.update(this.id, obj);
   }

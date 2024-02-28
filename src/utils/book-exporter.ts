@@ -1,5 +1,5 @@
 import Book from '@/models/book';
-import Post from '@/models/post';
+import Summary from '@/models/summary';
 import Chapter from '@/models/chapter';
 
 import TurndownService from 'turndown/lib/turndown.browser.es';
@@ -11,41 +11,60 @@ import {
 import {
   CATEGORY
 } from '@/const/book';
-import db from '@/api/db';
 
 export default class {
   id: number;
+  turndownService: TurndownService;
 
   constructor(id: number) {
     this.id = id;
-  }
-
-  async export(): Promise<any> {
-    const book = await Book.get(this.id);
-    const chapters = await book.getChapters();
-    var turndownService = new TurndownService({
+    this.turndownService = new TurndownService({
       headingStyle: 'atx',
       hr: '---',
       emDelimiter: '*'
     });
+  }
+
+  async export(book:Book, summary: Summary): Promise<any> {
+    const chapters = summary.data;
+
+    const _chapters = [];
+    let parent = null;
+    chapters.forEach(chapter => {
+      if (!chapter.level || !parent) {
+        parent = {
+          chapter,
+          children: [],
+          slug: chapter.slug,
+          path: chapter.slug + '.md'
+        };
+        _chapters.push(parent);
+      } else {
+        parent.children.push({
+          chapter,
+          path: `${parent.slug}/${chapter.slug}.md`
+        });
+      }
+    });
+
     const contents = [this.bookToMd(book)];
-    chapters.forEach((chapter, idx) => {
-      contents.push(this.chapterToMd(chapter, idx, turndownService));
+    _chapters.forEach((obj, idx) => {
+      if (obj.children && obj.children.length) {
+        obj.path = `${obj.slug}/index.md`;
+      }
+      contents.push(this.chapterToMd(obj.chapter, idx, obj.path));
+      obj.children.forEach((child, _idx) => {
+        contents.push(
+          this.chapterToMd(child.chapter, _idx, child.path)
+        )
+      })
     });
 
     return Promise.all(contents)
       .then(pages => {
         const zip = new JSZip();
         let folder: any = zip;
-        pages.forEach(({name, content, volume, level}) => {
-          if (!level) {
-            if (volume) {
-              folder = zip.folder(volume);
-            } else {
-              folder = zip;
-            }
-          }
-
+        pages.forEach(({name, content}) => {
           folder.file(name, content);
         });
 
@@ -61,7 +80,7 @@ export default class {
   }> {
     const content = `---
 title: ${book.title}
-category: ${CATEGORY[book.category]}
+category: ${CATEGORY[book.category].label}
 start: ${book.start}
 end: ${book.end}
 ---
@@ -73,28 +92,20 @@ ${book.content || ""}
     };
   }
 
-  async chapterToMd(chapter: Chapter, idx: number, service: TurndownService): Promise<{
+  async chapterToMd(chapter: Chapter, idx: number, path: string): Promise<{
     name: string,
-    content: string,
-    volume: string,
-    level: number
+    content: string
   }> {
-    const post = await Post.get(chapter.path);
+    const post = await chapter.getContent();
     const content = `---
 title: ${chapter.title || ""}
 index: ${idx + 1}
 ---
-${service.turndown(post.content || "")}
+${this.turndownService.turndown(post || "")}
     `;
-    let name = chapter.slug + '.md';
-    if (chapter.volume) {
-      name = 'index.md'
-    }
     return {
-      name: name,
-      content,
-      volume: chapter.volume ? chapter.slug : '',
-      level: chapter.level
+      name: path,
+      content
     };
   }
 }
