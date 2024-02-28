@@ -4,6 +4,7 @@ import {
   fetch,
   update
 } from '@/api/posts';
+import db from '@/api/db';
 
 function getPath(slug: string) {
   if (this.parent) {
@@ -51,8 +52,24 @@ class Chapter extends Base {
       })
   }
 
+  async getTempContent(): Promise<{
+    id: string,
+    content: string,
+    updatedAt: number
+  }> {
+    return db.posts.where('id').equals(this.id).first();
+  }
+
   async saveContent(content: string): Promise<any> {
     return update(this.book, this.id, content);
+  }
+
+  async saveTempContent(content: string): Promise<any> {
+    return db.posts.put({
+      id: this.id,
+      content,
+      updatedAt: new Date().getTime()
+    });
   }
 
   static async new(slug: string, book: string): Promise<Chapter> {

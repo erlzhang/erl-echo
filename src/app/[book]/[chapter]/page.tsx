@@ -30,14 +30,31 @@ export default function ChapterPage(
   const [wordCount, setWordCount] = useState<number>(0);
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
   const [saving, setSaving] = useState<boolean>(false);
+  const [hasChanged, setHasChanged] = useState<boolean>(false);
   const editorRef = useRef()
+
+  const getContent = async (_chapter) => {
+    const temp = await _chapter.getTempContent();
+    if (temp != null) {
+      const updatedTime = temp.updatedAt;
+      const chapterUpdatedTime = new Date(_chapter.updatedAt).getTime();
+      // 如果本地草稿保存时间大于远程保存时间，加载本地草稿
+      if (updatedTime > chapterUpdatedTime) {
+        setHasChanged(true);
+        return temp.content;
+      }
+    }
+
+    return _chapter.getContent();
+  }
 
   useEffect(() => {
     if (!params.chapter || !summary || chapter) return;
 
     const _chapter = summary.getChapter(params.chapter);
     setChapter(_chapter);
-    _chapter.getContent()
+    // _chapter.getContent()
+    getContent(_chapter)
       .then((_content: string) => {
         setWordCount(_chapter.wordCount);
         setContent(_content);
@@ -45,8 +62,11 @@ export default function ChapterPage(
   }, [params.chapter, summary])
 
   const handleChange = useCallback((_content:string) => {
-    setWordCount(getWordCount(_content));
-    setContent(_content);
+    chapter?.saveTempContent(_content)
+      .then(() => {
+        setWordCount(getWordCount(_content));
+        setHasChanged(true);
+      });
   }, [chapter]);
 
   const updateBookWordcount = useCallback(() => {
@@ -69,6 +89,7 @@ export default function ChapterPage(
         }).then((_chapter: Chapter) => {
           setChapter(_chapter.clone())
           setSaving(false);
+          setHasChanged(false);
           updateBookWordcount()
         });
       })
@@ -102,6 +123,21 @@ export default function ChapterPage(
     })
   }, [summary]);
 
+  useEffect(() => {
+    if (!chapter) return;
+
+    const handler = (e) => {
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        saveContent();
+      }
+    };
+    window.document.addEventListener('keydown', handler);
+    return () => {
+      window.document.removeEventListener('keydown', handler);
+    }
+  }, [chapter])
+
   return (
     <>
       {
@@ -126,6 +162,10 @@ export default function ChapterPage(
               />
             </div>
             <div className="chapter-actions">
+              {
+                hasChanged &&
+                <span className="unchanged-content-hint">您有尚未保存的内容...</span>
+              }
               <span className="word-count">{ wordCount } 字</span>
               <Button
                 type="primary"

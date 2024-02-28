@@ -123,6 +123,11 @@ li.chapter-item.dragging {
   display: flex;
   align-items: center;
 }
+.unchanged-content-hint {
+  margin-right: 30px;
+  font-size: 14px;
+  color: var(--default);
+}
 .chapter-title {
   font-size: 2.35rem;
   margin: 1rem 0 2rem;
