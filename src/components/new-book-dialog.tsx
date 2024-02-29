@@ -6,12 +6,15 @@ import {
   CATEGORY,
   WRITING_MODE
 } from '@/const/book';
-import Book from '@/models/book';
+import Book, { Category, WritingMode } from '@/models/book';
 
 export default function NewBookDialog(
-  { onClose, onSubmit }
+  { onClose, onSubmit, index }
 ) {
-  const [form, setForm] = useState({})
+  const [form, setForm] = useState({
+    category: Category.Eassy,
+    writingMode: WritingMode.HandWriting
+  });
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (e) => {
@@ -26,7 +29,10 @@ export default function NewBookDialog(
     // TODO: validate form
     // onSubmit?.call(null, form)
     setLoading(true)
-    Book.new(form)
+    Book.new({
+      ...form,
+      index
+    })
       .then(book => {
         setLoading(false)
         onSubmit?.call(null, book.slug)

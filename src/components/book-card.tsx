@@ -23,7 +23,10 @@ export default function BookCard(
           { book.content }
         </div>
         <div className="book-meta">
-          <span>{ book.date }</span>
+          {
+            book.date &&
+            <span>{ book.date }</span>
+          }
           <span>{ CATEGORY[book.category] && CATEGORY[book.category].label }</span>
           <span>{ WRITING_MODE[book.writingMode] && WRITING_MODE[book.writingMode].label }</span>
           <span>{ book.wordCount }字</span>

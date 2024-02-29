@@ -1,6 +1,3 @@
-import {
-  getCurrentYear
-} from '@/utils/date';
 import Chapter from './chapter';
 import Base from './base';
 
@@ -33,12 +30,13 @@ export enum WritingMode {
 }
 
 class Book extends Base {
+  index:number=0;
   slug:string = "";
   title:string = "";
   content:string = "";
   status:Status = Status.New;
-  start:number = getCurrentYear();
-  end:number = getCurrentYear();
+  start:number|null = null;
+  end:number|null = null;
   category:Category = Category.Eassy;
   wordCount:number = 0;
   writingMode: WritingMode = WritingMode.HandWriting;
@@ -51,7 +49,11 @@ class Book extends Base {
   }
 
   get date(): string {
-    if (this.start === this.end) {
+    if (!this.start) {
+      return '';
+    } else if (!this.end) {
+      return this.start + '';
+    } else if (this.start === this.end) {
       return this.end + '';
     } else {
       return `${this.start}-${this.end}`;

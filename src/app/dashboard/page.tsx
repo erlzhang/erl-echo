@@ -10,6 +10,9 @@ import { CiViewBoard, CiViewList, CiGrid41 } from "react-icons/ci";
 import '@/styles/app.css';
 import CardView from "@/components/views/card-view";
 import NewBookDialog from '@/components/new-book-dialog';
+import {
+  getMaxIndexOfBooks
+} from '@/utils/book';
 
 enum BooksView {
   CardView,
@@ -19,6 +22,7 @@ enum BooksView {
 
 export default function Home() {
   const [books, setBooks] = useState<Book[]>([]);
+  const [maxIndex, setMaxIndex] = useState<number>(0);
   const [view, setView] = useState<BooksView>(BooksView.CardView);
   const [showDialog, setShowDialog] = useState<boolean>(false)
   
@@ -31,6 +35,7 @@ export default function Home() {
       //   return;
       // }
       setBooks(data);
+      setMaxIndex(getMaxIndexOfBooks(data));
     });
   }, []);
 
@@ -82,6 +87,7 @@ export default function Home() {
         <NewBookDialog
           onClose={() => setShowDialog(false)}
           onSubmit={onAdd}
+          index={maxIndex}
         ></NewBookDialog>
       }
     </main>

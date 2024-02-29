@@ -18,6 +18,9 @@ import {
 import { useRouter } from 'next/navigation';
 
 import EditableField from '@/components/ui/editable-field';
+import {
+  getCurrentYear
+} from '@/utils/date';
 
 export default function BookPage() {
   const router = useRouter();
@@ -35,7 +38,19 @@ export default function BookPage() {
   }
 
   const setStatus = (val: Status) => {
-    handleChange({ target: { name: 'status', value: val } })
+    const obj:any = {
+      status: val
+    };
+    if (val === Status.Writing) {
+      obj.start = getCurrentYear();
+    } else if (val === Status.Published) {
+      obj.end = getCurrentYear();
+    }
+    book?.update(obj)
+      .then(res => {
+        updateBook(book);
+      });
+    // handleChange({ target: { name: 'status', value: val } })
   }
 
   const handleRemove = (e) => {
