@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { TbEdit } from "react-icons/tb";
 
-export default function({ value, onChange, name, placeholder = "", prefix = "" }: {
+export default function({ value, onChange, name, placeholder = "", prefix = "", type = "text" }: {
   value: string,
   onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>,
   name: string,
   placeholder: string,
-  prefix: string
+  prefix: string,
+  type: string
 }) {
   const ref = useRef(null)
   const [editable, setEditable] = useState<boolean>(false)
@@ -46,30 +47,72 @@ export default function({ value, onChange, name, placeholder = "", prefix = "" }
       }
       {
         editable ?
-        <input
-          className="form-control"
-          name={name}
-          value={val}
-          ref={ref}
-          onChange={(e) => setVal(e.target.value)}
-          onBlur={(e) => {
-            onChange(e)
-            setEditable(false)
-          }}
-        ></input> :
         <>
           {
-            value ||
+            type === 'text' ? 
+            <input
+              className="form-control"
+              name={name}
+              value={val}
+              ref={ref}
+              onChange={(e) => setVal(e.target.value)}
+              onBlur={(e) => {
+                onChange(e)
+                setEditable(false)
+              }}
+            ></input> :
+            <textarea
+              className="form-control"
+              name={name}
+              value={val}
+              ref={ref}
+              onChange={(e) => setVal(e.target.value)}
+              onBlur={(e) => {
+                onChange(e)
+                setEditable(false)
+              }}
+            ></textarea>
+          }
+        </> :
+        <>
+          {
+            value ?
+            <>
+              {
+                value.split('\n').length > 1 ? 
+                value.split('\n').map((line, index) => {
+                  return (
+                    <p>
+                      {line}
+                      {
+                        index === value.split('\n').length - 1 &&
+                        <button
+                          className="hover-btn"
+                          onClick={() => setEditable(true)}
+                        >
+                          <TbEdit></TbEdit>
+                        </button>
+                      }
+                    </p>
+                  )
+                }) :
+                value
+              }
+            </>
+            :
             <span className="placeholder">
               { placeholder }
             </span>
           }
-          <button
-            className="hover-btn"
-            onClick={() => setEditable(true)}
-          >
-            <TbEdit></TbEdit>
-          </button>
+          {
+            value && value.split('\n').length <= 1 &&
+            <button
+              className="hover-btn"
+              onClick={() => setEditable(true)}
+            >
+              <TbEdit></TbEdit>
+            </button>
+          }
         </>
       }
     </div>

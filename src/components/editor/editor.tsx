@@ -51,11 +51,7 @@ export const Editor = (
       Placeholder.configure({
         showOnlyCurrent: false,
         placeholder: ({ node }) => {
-          if (node.type.name === 'heading') {
-            return 'Chapter Title'
-          }
-
-          return 'Write Your Story ...'
+          return '书写你的故事 ...'
         },
       }),
       Image,

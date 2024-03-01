@@ -12,7 +12,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  padding: 10px 50px;
+  padding: 0 10px;
   line-height: 40px;
   background-color: white;
   display: flex;
@@ -27,10 +27,32 @@
   margin-right: 10px;
   vertical-align: bottom;
 }
+.user-info {
+  display: flex;
+  align-items: center;
+}
+.avatar-img {
+  border-radius: 50%;
+  margin-right: 10px;
+}
 .header-inner {
   display: flex;
 }
 .body {
   width: 100%;
   height: 100%;
+}
+.welcome {
+  display: flex;
+  align-items: center;
+  height: 400px;
+  justify-content: center;
+  flex-direction: column;
+}
+.welcome img {
+  margin-bottom: 30px;
+}
+.welcome h1 {
+  color: var(--primary);
+  font-weight: normal;
 }

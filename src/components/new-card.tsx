@@ -37,12 +37,13 @@ export default function NewCard(
           ref={ref}
           className="add-input"
           onBlur={handleBlur}
+          placeholder="章节路径"
         /> :
         <div
           className="add-btn"
           onClick={handleClick}
         >
-          + New Chapter
+          + 新增章节
         </div>
       }
     </div>

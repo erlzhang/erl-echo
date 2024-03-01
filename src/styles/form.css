@@ -46,6 +46,8 @@
 textarea.form-control {
   height: 100px;
   font-family: inherit;
+  padding: 10px;
+  line-height: 25px;
 }
 .select-options {
   position: absolute;
@@ -59,10 +61,12 @@ textarea.form-control {
   z-index: 10000;
 }
 .btn {
-  padding: 8px 15px;
+  padding: 6px 20px;
   border-radius: 4px;
   cursor: pointer;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn + .btn {

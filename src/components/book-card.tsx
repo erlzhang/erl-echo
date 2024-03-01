@@ -29,7 +29,10 @@ export default function BookCard(
           }
           <span>{ CATEGORY[book.category] && CATEGORY[book.category].label }</span>
           <span>{ WRITING_MODE[book.writingMode] && WRITING_MODE[book.writingMode].label }</span>
-          <span>{ book.wordCount }字</span>
+          {
+            book.hasSummary &&
+            <span>{ book.wordCount }字</span>
+          }
         </div>
       </Link>
     </div>

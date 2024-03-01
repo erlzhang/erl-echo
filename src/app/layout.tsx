@@ -1,6 +1,7 @@
 import Header from '@/components/header'
 import "@/styles/layout.css";
 import AuthContextProvider from "@/contexts/authContext";
+import { useRouter, usePathname } from "next/navigation";
 
 export const metadata = {
   title: 'Echo',
@@ -16,8 +17,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="container">
-          <Header></Header>
           <AuthContextProvider>
+            <Header></Header>
             <div className="body">
               {children}
             </div>

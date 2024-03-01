@@ -93,6 +93,7 @@ export default function BookPage() {
                 value={book.content}
                 name="content"
                 placeholder="Your Book's Description ..."
+                type="textarea"
                 onChange={handleChange}
               ></EditableField>
             </div>
@@ -167,31 +168,41 @@ export default function BookPage() {
           </div>
           <div className="book-meta">
             <span>已撰写 { book.wordCount || 0 } 字</span>
-            <span>更新于 { book.updatedAt.toLocaleString() }</span>
+            <span>更新于 { new Date(book.updatedAt).toLocaleString() }</span>
           </div>
           <div className="book-actions">
-            <div
-              className="book-action book-action-default"
-              onClick={exportBook}
-            >
-              <FiDownloadCloud></FiDownloadCloud>
-              Export Book
-            </div>
-            <div
-              className="book-action book-action-danger"
-              onClick={() => setShowConfirm(true)}
-            >
-              <GoTrash />
-              Delete Book
-            </div>
-            {/* <div
-              className="book-action book-action-danger"
-            >
-              <a href={`https://erl.im/` +}>
-                <LiaReadme />
-                Preview
-              </a>
-            </div> */}
+            {
+              book?.hasSummary &&
+              <div
+                className="book-action book-action-default"
+                onClick={exportBook}
+              >
+                <FiDownloadCloud></FiDownloadCloud>
+                导出
+              </div>
+            }
+            {
+              book?.status < Status.Published &&
+              <div
+                className="book-action book-action-danger"
+                onClick={() => setShowConfirm(true)}
+              >
+                <GoTrash />
+                删除
+              </div>
+            }
+            
+            {
+              book?.status === Status.Published && summary &&
+              <div
+                className="book-action book-action-default"
+              >
+                <a href={summary.getPreviewLink()} target="_blank">
+                  <LiaReadme />
+                  预览
+                </a>
+              </div>
+            }
           </div>
         </div>
       }

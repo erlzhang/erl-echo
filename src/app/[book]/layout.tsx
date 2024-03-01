@@ -4,8 +4,8 @@ import React from 'react';
 import '@/styles/book.css';
 
 import BookContextProvider from '@/contexts/bookContext'
-import BookHeader from '@/components/book-header';
-import Summary from '@/components/summary';
+
+import Sidebar from '@/components/sidebar';
 
 export default function BookLayout(
   {children}:
@@ -16,14 +16,9 @@ export default function BookLayout(
   return (
     <BookContextProvider>
       <main className="content-container">
-        <div className="sidebar">
-          <BookHeader></BookHeader>
-          <Summary/>
-        </div>
+        <Sidebar/>
         <div className="content">
-          {/* <div className="chapter-inner"> */}
-            { children }
-          {/* </div> */}
+          { children }
         </div>
       </main>
     </BookContextProvider>

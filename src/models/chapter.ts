@@ -6,14 +6,6 @@ import {
 } from '@/api/posts';
 import db from '@/api/db';
 
-function getPath(slug: string) {
-  if (this.parent) {
-    return `/${this.book}/${this.parent}/${slug}`;
-  } else {
-    return `/${this.book}/${slug}`;
-  }
-}
-
 class Chapter extends Base {
   id:string = "";
   book:string = "";

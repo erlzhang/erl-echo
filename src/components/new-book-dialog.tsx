@@ -41,7 +41,7 @@ export default function NewBookDialog(
 
   return (
     <Dialog
-      title="Create New Book"
+      title="开启新创作"
       onClose={() => onClose?.call()}
       style={{
         width: "600px"
@@ -49,7 +49,7 @@ export default function NewBookDialog(
     >
       <div className="new-book-form">
         <FormItem
-          label="Title"
+          label="标题"
         >
           <Input
             name="title"
@@ -58,7 +58,7 @@ export default function NewBookDialog(
           ></Input>
         </FormItem>
         <FormItem
-          label="Slug"
+          label="路径"
         >
           <Input
             name="slug"
@@ -67,7 +67,7 @@ export default function NewBookDialog(
           ></Input>
         </FormItem>
         <div className="form-item form-item-row">
-          <FormItem label="Category" inline={true}>
+          <FormItem label="分类" inline={true}>
             <Select
               name="category"
               value={form.category}
@@ -80,7 +80,7 @@ export default function NewBookDialog(
               onChange={handleChange}
             ></Select>
           </FormItem>
-          <FormItem label="Writing Mode" inline={true}>
+          <FormItem label="写作方式" inline={true}>
             <Select
               name="writingMode"
               value={form.writingMode}
@@ -103,8 +103,8 @@ export default function NewBookDialog(
             type={["primary", "block"]}
             onClick={handleSubmitForm}
             loading={loading}
-            loadingText="Submitting ..."
-          >Enter New</Button>
+            loadingText="创建中 ..."
+          >确认新建</Button>
         </div>
       </div>
     </Dialog>

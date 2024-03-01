@@ -1,27 +1,15 @@
 "use client";
-
-// import * as NetlifyIdentityWidget from "netlify-identity-widget"
 import "@/styles/layout.css";
-// import { useRouter } from 'next/navigation';
-// import { useEffect } from "react";
+import Image from 'next/image'
 
 export default function App() {
-  // const router = useRouter();
-  // useEffect(() => {
-  //   // router.push('/dashboard')
-  //   NetlifyIdentityWidget.on('init', user => {
-  //     if (!user) {
-  //       NetlifyIdentityWidget.open();
-  //     }
-  //     // else {
-  //     //   router.push('/dashboard')
-  //     // }
-  //   });
-
-  //   NetlifyIdentityWidget.init();
-  // }, [])
 
   return (
-    <></>
+    <>
+      <div className="welcome">
+        <Image src="/quill-pen.svg" alt="logo" width="100" height="100" />
+        <h1>Have Fun Writing !</h1>
+      </div>
+    </>
   )
 }

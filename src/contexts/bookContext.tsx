@@ -53,6 +53,14 @@ const BookContextProvider = ({ children }) => {
 
     const slug = params.book as string;
     Book.get(slug).then(book => {
+      if (!book.hasSummary) {
+        setContext({
+          ...context,
+          book,
+        });
+        return;
+      }
+
       Summary.get(slug)
         .then(summary => {
           console.log('before setContext');

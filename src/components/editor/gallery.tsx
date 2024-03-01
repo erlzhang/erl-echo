@@ -4,7 +4,8 @@ import Dialog from '@/components/ui/dialog';
 import { Button } from "@/components/ui/form";
 import Uploader from "@/components/ui/uploader";
 import { useEffect, useState } from 'react';
-import { Loader, FolderPlus, ArrowLeft, XCircle } from 'react-feather';
+import { FiXCircle, FiLoader, FiArrowLeft } from "react-icons/fi";
+import { FcFolder } from "react-icons/fc";
 
 import {
   getImages,
@@ -55,7 +56,7 @@ export default function GalleryDialog({ onClose, onInsert }) {
               setPrefix(img.prefix)
             }}
           >
-            <FolderPlus></FolderPlus>
+            <FcFolder/>
             <div>{ getLastSlug(img.prefix) }</div>
           </div> :
           <div
@@ -69,7 +70,7 @@ export default function GalleryDialog({ onClose, onInsert }) {
             {
               img.loading &&
               <div className="ocr-loading-icon">
-                <Loader></Loader>
+                <FiLoader/>
               </div>
             }
             {
@@ -78,7 +79,7 @@ export default function GalleryDialog({ onClose, onInsert }) {
                 className="remove-img-btn"
                 onClick={() => handleRemove(img.name)}
               >
-                <XCircle></XCircle>
+                <FiXCircle/>
               </div>
             }
           </div>
@@ -129,8 +130,8 @@ export default function GalleryDialog({ onClose, onInsert }) {
                 setPrefix(last)
               }}
             >
-              <ArrowLeft></ArrowLeft>
-              <span>Back</span>
+              <FiArrowLeft/>
+              <span>返回</span>
             </Button>
           </div>
         }

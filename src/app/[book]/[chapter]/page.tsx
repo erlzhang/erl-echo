@@ -6,6 +6,8 @@ import Chapter from '@/models/chapter';
 import { Button } from '@/components/ui/form';
 import Confirm from '@/components/ui/confirm';
 import { useRouter } from 'next/navigation';
+import {FiSave, FiTrash2 } from "react-icons/fi";
+import { FcEmptyTrash } from "react-icons/fc";
 
 import Title from '@/components/editor/title'
 import EditableField from '@/components/ui/editable-field';
@@ -56,7 +58,7 @@ export default function ChapterPage(
     // _chapter.getContent()
     getContent(_chapter)
       .then((_content: string) => {
-        setWordCount(_chapter.wordCount);
+        setWordCount(getWordCount(_content));
         setContent(_content);
       })
   }, [params.chapter, summary])
@@ -164,19 +166,27 @@ export default function ChapterPage(
             <div className="chapter-actions">
               {
                 hasChanged &&
-                <span className="unchanged-content-hint">您有尚未保存的内容...</span>
+                <span className="unchanged-content-hint">
+                  您有尚未保存的内容...
+                </span>
               }
               <span className="word-count">{ wordCount } 字</span>
               <Button
                 type="primary"
                 loading={saving}
-                loadingText="Saving..."
+                loadingText="保存中..."
                 onClick={() => saveContent()}
-              >Save Chapter</Button>
+              >
+                <FiSave/>
+                保存
+              </Button>
               <Button
                 type="error"
                 onClick={() => setShowConfirm(true)}
-              >Delete Chapter</Button>
+              >
+                <FiTrash2 />
+                删除
+              </Button>
             </div>
           </div>
           <div className="chapter-inner">

@@ -25,6 +25,15 @@ export default class Summary {
     });
   }
 
+  getPreviewLink() {
+    if (!this.data.length) {
+      return;
+    }
+
+    const firstChapter = this.data[0];
+    return `https://erl.im/` + this.slug + '/' + firstChapter.slug;
+   }
+
   getChapter(id: string) {
     return this._data.get(id);
   }

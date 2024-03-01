@@ -100,20 +100,14 @@ li.chapter-item.dragging {
 .chapter-inner {
   max-width: 750px;
   width: 100%;
-  margin: 4.5rem auto 3.5rem;
+  margin: 1.5rem auto 3.5rem;
 }
 .chapter-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 20px;
-  position: fixed;
-  width: calc(100% - var(--summary-width));
-  top: 0;
-  background-color: white;
-  right: 0;
-  height: calc(var(--header-height) - 1);
-  z-index: 1;
+  padding: 10px 20px;
+  width: 100%;
 }
 .chapter-slug {
   line-height: 1.5rem;
@@ -133,7 +127,7 @@ li.chapter-item.dragging {
   margin: 1rem 0 2rem;
 }
 .chapter-title-inner:empty::before {
-  content: "Chapter Title";
+  content: "标题";
   color: var(--light-gray);
 }
 .chapter-title-inner:focus {
@@ -273,8 +267,11 @@ li.chapter-item.dragging {
 }
 
 .editable-field {
-  display: flex;
-  align-items: center;
+  /* display: flex;
+  align-items: center; */
+}
+.editable-field p {
+  line-height: 25px;
 }
 .editable-field .form-control {
   vertical-align: top;
