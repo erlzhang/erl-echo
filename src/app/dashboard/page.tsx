@@ -7,12 +7,14 @@ import { Button } from '@/components/ui/form';
 import Book, { Status } from '@/models/book';
 import { STATUS } from '@/const/book';
 import { FiPlus } from "react-icons/fi";
+import { GrDeploy } from "react-icons/gr";
 import '@/styles/app.css';
 import CardView from "@/components/views/card-view";
 import NewBookDialog from '@/components/new-book-dialog';
 import {
   getMaxIndexOfBooks
 } from '@/utils/book';
+import { triggerBuild } from '@/api/build';
 
 export default function Home() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -61,6 +63,13 @@ export default function Home() {
     router.push(`/${slug}`);
   }
 
+  const Deploy = () => {
+    triggerBuild()
+      .then(() => {
+        
+      })
+  }
+
   return (
     <main className="books-main">
       <div className="top-actions">
@@ -77,6 +86,13 @@ export default function Home() {
         
         </div>
         <div className="top-actions-right">
+          <Button
+            type="primary"
+            onClick={Deploy}
+          >
+            <GrDeploy />
+            部署
+          </Button>
           <Button
             type="primary"
             onClick={() => setShowDialog(true)}

@@ -11,7 +11,6 @@ import { usePathname } from "next/navigation";
 export default function() {
   const { user, logout } = useContext(AuthContext);
   const pathname = usePathname();
-  console.log('user', user);
 
   return (
     <>
@@ -24,25 +23,29 @@ export default function() {
               Echo
             </Link>
           </div>
-          <div className="user-info">
-            <img
-              src="http://erlim.oss-cn-hongkong.aliyuncs.com/img/avatar.jpg"
-              alt="avatar"
-              className="avatar-img"
-              width="30"
-              height="30"
-            />
-            Hello, Erl!
-            <Button
-              onClick={logout}
-              style={{
-                textDecoration: 'underline'
-              }}
-            >
-              <CiLogout/>
-              退出登录
-            </Button>
-          </div>        
+          {
+            user &&
+            <div className="user-info">
+              <img
+                src="http://erlim.oss-cn-hongkong.aliyuncs.com/img/avatar.jpg"
+                alt="avatar"
+                className="avatar-img"
+                width="30"
+                height="30"
+              />
+              Hello, { user.user_metadata.full_name }!
+              <Button
+                onClick={logout}
+                style={{
+                  textDecoration: 'underline'
+                }}
+              >
+                <CiLogout/>
+                退出登录
+              </Button>
+            </div>
+          }
+          
         </header>
       }
     </>

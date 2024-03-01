@@ -24,11 +24,7 @@ export default function Confirm(
           marginBottom: 30
         }}
       >{ text }</h3>
-      <div
-        style={{
-          textAlign: "center",
-        }}
-      >
+      <div className="dialog-actions">
         <Button
           type="primary"
           onClick={ onConfirm }

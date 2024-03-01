@@ -6,3 +6,5 @@ axios.interceptors.request.use(config => {
 })
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API;
+
+export const BUILD_HOOK = process.env.NEXT_PUBLIC_BUILD_HOOK;

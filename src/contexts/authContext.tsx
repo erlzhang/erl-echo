@@ -45,7 +45,7 @@ const AuthContextProvider = ({ children }) => {
     NetlifyIdentityWidget.on("logout", (user) => {
       setUser(null);
       router.push('/');
-      NetlifyIdentityWidget.open();
+      // NetlifyIdentityWidget.open();
     });
 
     NetlifyIdentityWidget.init();

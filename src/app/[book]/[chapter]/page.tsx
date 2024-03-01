@@ -3,8 +3,7 @@ import { Editor } from '@/components/editor/editor';
 import { useCallback, useEffect, useState, useRef, useContext } from 'react';
 import { BookContext } from '@/contexts/bookContext'
 import Chapter from '@/models/chapter';
-import { Button } from '@/components/ui/form';
-import Confirm from '@/components/ui/confirm';
+import Button from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import {FiSave, FiTrash2 } from "react-icons/fi";
 import { FcEmptyTrash } from "react-icons/fc";
@@ -14,7 +13,6 @@ import EditableField from '@/components/ui/editable-field';
 import {
   getWordCount
 } from '@/utils/word';
-// import { getChapter, putChapter } from '@/api/db';
 
 export default function ChapterPage(
   {params}:
@@ -30,8 +28,6 @@ export default function ChapterPage(
   const [chapter, setChapter] = useState<Chapter | null>(null);
   const [content, setContent] = useState<string>('');
   const [wordCount, setWordCount] = useState<number>(0);
-  const [showConfirm, setShowConfirm] = useState<boolean>(false);
-  const [saving, setSaving] = useState<boolean>(false);
   const [hasChanged, setHasChanged] = useState<boolean>(false);
   const editorRef = useRef()
 
@@ -81,31 +77,46 @@ export default function ChapterPage(
     })
   }, [book, summary])
 
-  const saveContent = useCallback(() => {
-    setSaving(true);
-    chapter?.saveContent(content)
+  const saveContent = useCallback(async () => {
+    return chapter?.saveContent(content)
       .then(() => {
-        summary?.updateChapter(params.chapter, {
+        return summary?.updateChapter(params.chapter, {
           wordCount: getWordCount(content),
           updatedAt: new Date()
-        }).then((_chapter: Chapter) => {
-          setChapter(_chapter.clone())
-          setSaving(false);
-          setHasChanged(false);
-          updateBookWordcount()
-        });
+        }).then(() => {
+          return {
+            msg: '保存成功',
+            payload: chapter
+          }
+        }).catch((e) => {
+          throw({
+            msg: '保存失败'
+          });
+        })
       })
   }, [chapter, content])
 
-  const handleRemove = useCallback(() => {
-    summary?.remove(params.chapter)
+  const afterSave = (_chapter) => {
+    setChapter(_chapter.clone())
+    setHasChanged(false);
+    updateBookWordcount()
+  };
+
+  const handleRemove = useCallback(async () => {
+    return summary?.remove(params.chapter)
       .then(() => {
-        setShowConfirm(false);
-        router.push(`/${params.book}`);
-        updateSummary(summary)
-        updateBookWordcount()
+        return {
+          msg: '删除成功',
+          payload: summary
+        }
       })
   }, [summary])
+
+  const afterRemove = (summary) => {
+    router.push(`/${params.book}`);
+    updateSummary(summary)
+    updateBookWordcount()
+  }
 
   const handleTitleChange = useCallback((val: string) => {
     summary?.updateChapter(params.chapter, {
@@ -143,14 +154,6 @@ export default function ChapterPage(
   return (
     <>
       {
-        showConfirm &&
-        <Confirm
-          text="删除章节不可恢复，确认是否删除？"
-          onConfirm={handleRemove}
-          onClose={() => setShowConfirm(false)}
-        ></Confirm>
-      }
-      {
         chapter &&
         <>
           <div className="chapter-header">
@@ -173,16 +176,20 @@ export default function ChapterPage(
               <span className="word-count">{ wordCount } 字</span>
               <Button
                 type="primary"
-                loading={saving}
                 loadingText="保存中..."
-                onClick={() => saveContent()}
+                async={true}
+                onClick={saveContent}
+                onSuccess={afterSave}
               >
                 <FiSave/>
                 保存
               </Button>
               <Button
                 type="error"
-                onClick={() => setShowConfirm(true)}
+                onClick={handleRemove}
+                onSuccess={afterRemove}
+                confirm="删除章节不可恢复，确认是否删除？"
+                async={true}
               >
                 <FiTrash2 />
                 删除

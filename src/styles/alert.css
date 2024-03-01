@@ -1,0 +1,36 @@
+.alert-container {
+  width: 100%;
+  position: fixed;
+  top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+}
+.alert {
+  width: 300px;
+  padding: 8px 16px;
+  margin: 0;
+  box-sizing: border-box;
+  border-radius: 4px;
+  position: fixed;
+  background-color: #fff;
+  overflow: hidden;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  transition: opacity .2s;
+}
+.alert svg {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+.alert.alert-error {
+  background-color: #fef0f0;
+  color: #f56c6c;
+}
+.alert.alert-success {
+  background-color: #f0f9eb;
+  color: #67c23a;
+}
