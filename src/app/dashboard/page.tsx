@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { Button } from '@/components/ui/form';
+import Button from '@/components/ui/button';
 
 import Book, { Status } from '@/models/book';
 import { STATUS } from '@/const/book';
@@ -63,11 +63,13 @@ export default function Home() {
     router.push(`/${slug}`);
   }
 
-  const Deploy = () => {
-    triggerBuild()
+  const handleDeploy = async () => {
+    return triggerBuild()
       .then(() => {
-        
-      })
+        return {
+          msg: '部署成功，等待10分钟后刷新前台页面查看！'
+        }
+      });
   }
 
   return (
@@ -88,7 +90,10 @@ export default function Home() {
         <div className="top-actions-right">
           <Button
             type="primary"
-            onClick={Deploy}
+            async={true}
+            onClick={handleDeploy}
+            confirm="该操作将更新全部内容，确认是否继续？"
+            loadingText="部署中..."
           >
             <GrDeploy />
             部署
