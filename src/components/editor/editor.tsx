@@ -54,7 +54,9 @@ export const Editor = (
           return '书写你的故事 ...'
         },
       }),
-      Image,
+      Image.configure({
+        inline: true,
+      }),
       Subscript,
       Superscript,
       Highlight,
@@ -72,7 +74,6 @@ export const Editor = (
     content: content || empty,
     // triggered on every change
     onUpdate: ({ editor }) => {
-      const json = editor.getJSON()
       const content = editor.getHTML();
       onChange(content);
       // send the content to an API here
