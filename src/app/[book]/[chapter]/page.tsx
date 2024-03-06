@@ -80,7 +80,6 @@ export default function ChapterPage(
     // const temp = await _chapter.getTempContent();
     return chapter?.getTempContent()
       .then(res => {
-        console.log('content', res.content);
         return chapter?.saveContent(res.content)
           .then(() => {
             return summary?.updateChapter(params.chapter, {
@@ -146,7 +145,10 @@ export default function ChapterPage(
     const handler = (e) => {
       if (e.ctrlKey && e.key === 's') {
         e.preventDefault();
-        saveContent();
+        saveContent()
+          .then(() => {
+            afterSave(chapter);
+          })
       }
     };
     window.document.addEventListener('keydown', handler);
