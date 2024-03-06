@@ -100,14 +100,18 @@ li.chapter-item.dragging {
 .chapter-inner {
   max-width: 750px;
   width: 100%;
-  margin: 1.5rem auto 3.5rem;
+  margin: 3.5rem auto;
 }
 .chapter-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  width: 100%;
+  padding: 13px 20px;
+  position: fixed;
+  top: 0;
+  width: calc(100% - 300px);
+  background-color: white;
+  z-index: 2;
 }
 .chapter-slug {
   line-height: 1.5rem;
@@ -234,6 +238,8 @@ li.chapter-item.dragging {
 .book-form .book-status-tag svg {
   vertical-align: bottom;
   margin-right: 5px;
+  width: 20px;
+  height: 20px;
 }
 .book-status-arrow {
   margin: 0 15px;

@@ -1,5 +1,6 @@
 import Dialog from "@/components/ui/dialog";
-import { FormItem, Input, Button } from "@/components/ui/form";
+import { FormItem, Input } from "@/components/ui/form";
+import Button from "@/components/ui/button";
 import Select from "@/components/ui/select";
 import React, { useState } from "react";
 import {
@@ -25,17 +26,21 @@ export default function NewBookDialog(
     });
   }
 
-  const handleSubmitForm = () => {
+  const handleSubmitForm = async () => {
     // TODO: validate form
     // onSubmit?.call(null, form)
-    setLoading(true)
-    Book.new({
+    // setLoading(true)
+    return Book.new({
       ...form,
       index
     })
       .then(book => {
-        setLoading(false)
-        onSubmit?.call(null, book.slug)
+        return {
+          msg: '创建成功！',
+          payload: book.slug
+        }
+        // setLoading(false)
+        // onSubmit?.call(null, book.slug)
       })
   }
 
@@ -102,7 +107,8 @@ export default function NewBookDialog(
           <Button
             type={["primary", "block"]}
             onClick={handleSubmitForm}
-            loading={loading}
+            onSuccess={(val: string) => onSubmit?.call(null, val)}
+            async={true}
             loadingText="创建中 ..."
           >确认新建</Button>
         </div>

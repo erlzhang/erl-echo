@@ -1,9 +1,9 @@
 "use client";
 
 import "@/styles/form.css";
-import { Plus } from 'react-feather';
+import { FiPlus } from "react-icons/fi";
 import { useState, useRef } from "react";
-import { Button } from "./form";
+import Button from "./button";
 
 export default function Uploader({ onChange, width, height, type = 'button' }: {
   onChange: Function,
@@ -50,7 +50,7 @@ export default function Uploader({ onChange, width, height, type = 'button' }: {
             height: height || '150px'
           }}
         >
-          <Plus color="var(--border-color)" size={48} />
+          <FiPlus />
         </div>
       }
       

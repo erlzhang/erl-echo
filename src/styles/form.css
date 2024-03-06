@@ -114,6 +114,11 @@ textarea.form-control {
   background-position: center;
   background-size: cover;
 }
+.uploader svg {
+  width: 48px;
+  height: 48px;
+  color: var(--border-color);
+}
 
 .select-icon svg {
   position: absolute;

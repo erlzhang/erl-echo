@@ -3,7 +3,7 @@ import "@/styles/ocr.css"
 import Uploader from "@/components/ui/uploader";
 import { Input, Button } from '@/components/ui/form';
 import { useState } from 'react';
-import { Loader } from 'react-feather';
+import { FiLoader } from "react-icons/fi";
 import {
   ocrLoad
 } from '@/api/ocr';
@@ -57,7 +57,7 @@ export default function OcrDialog(
               loading &&
               <div className="ocr-loading">
                 <div className="ocr-loading-icon">
-                  <Loader></Loader>
+                  <FiLoader />
                 </div>
               </div>
             }

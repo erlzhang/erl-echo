@@ -6,7 +6,7 @@ export default function App() {
   return (
     <>
       <div className="welcome">
-        <Image src="/quill-pen.svg" alt="logo" width="100" height="100" />
+        <Image src="/write.svg" alt="logo" width="450" height="450" />
         <h1>Have Fun Writing !</h1>
       </div>
     </>

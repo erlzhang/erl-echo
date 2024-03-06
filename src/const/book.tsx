@@ -11,23 +11,28 @@ import React from 'react';
 export const STATUS =  {
   [Status.New]: {
     icon: <FcIdea/>,
-    label: '构思中'
+    label: '构思中',
+    color: [238, 224, 218]
   },
   [Status.Writing]: {
     icon: <Image src="/icons/write.png" alt="" width="20" height="20" />,
-    label: '写作中'
+    label: '写作中',
+    color: [211, 229, 239]
   },
   [Status.Finished]: {
     icon: <FcApproval/>,
-    label: '初稿完成'
+    label: '初稿完成',
+    color: [219, 237, 219]
   },
   [Status.Modifying]: {
     icon: <FcReadingEbook/>,
-    label: '修改中'
+    label: '修改中',
+    color: [255, 226, 221]
   },
   [Status.Published]: {
     icon: <FcFeedback/>,
-    label: '已发布'
+    label: '已发布',
+    color: [245, 224, 233]
   }
 };
 

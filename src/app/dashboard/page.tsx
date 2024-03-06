@@ -15,6 +15,8 @@ import {
   getMaxIndexOfBooks
 } from '@/utils/book';
 import { triggerBuild } from '@/api/build';
+import { sumBy } from 'lodash';
+import { IoMdFlower } from "react-icons/io";
 
 export default function Home() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -67,13 +69,14 @@ export default function Home() {
     return triggerBuild()
       .then(() => {
         return {
-          msg: '部署成功，等待10分钟后刷新前台页面查看！'
+          msg: '已启动部署，请查收邮件获取当前部署结果！'
         }
       });
   }
 
   return (
     <main className="books-main">
+      
       <div className="top-actions">
         <div className="top-actions-left">
           <div className="status-filter">
@@ -86,6 +89,12 @@ export default function Home() {
             { filters }
           </div>
         
+        </div>
+        <div className="top-actions-center">
+          <IoMdFlower/>
+          总计已撰写
+          { sumBy(books, (b: Book) => b.wordCount || 0) }
+          字，继续努力！
         </div>
         <div className="top-actions-right">
           <Button

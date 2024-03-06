@@ -6,11 +6,21 @@
 .top-actions {
   display: flex;
   margin-bottom: 20px;
+  align-items: center;
 }
 .top-actions-left {
   flex: 1;
   display: flex;
   align-items: center;
+}
+.top-actions-center {
+  flex: 1;
+  display: flex;
+}
+.top-actions-center svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
 }
 .top-actions-right {
   display: flex;
@@ -84,10 +94,21 @@
   color: white;
   font-size: 0.75rem;
   position: absolute;
-  right: 0;
+  right: 10px;
   top: 18px;
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
+  border-radius: 4px;
+  padding-left: 20px;
+}
+.book-card .book-status::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  position: absolute;
+  border-radius: 50%;
+  left: 8px;
+  top: 8px;
 }
 
 .book-list {

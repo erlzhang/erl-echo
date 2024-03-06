@@ -44,7 +44,7 @@ export const suggestion = {
             .chain()
             .focus()
             .deleteRange(range)
-            .toggleOrderedList()
+            .toggleBulletList()
             .run()
         },
         icon: <LuList />
@@ -57,7 +57,7 @@ export const suggestion = {
             .chain()
             .focus()
             .deleteRange(range)
-            .toggleBulletList()
+            .toggleOrderedList()
             .run()
         },
         icon: <LuListOrdered/>

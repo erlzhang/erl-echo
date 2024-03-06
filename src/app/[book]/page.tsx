@@ -121,7 +121,7 @@ export default function BookPage() {
                 value={book.writingMode}
                 tagMode={true}
                 style={{
-                  backgroundColor: 'rgb(211, 229, 239)'
+                  backgroundColor: `rgb(211, 229, 239)`
                 }}
                 options={
                   Object.keys(WRITING_MODE).map(key => {
@@ -149,7 +149,12 @@ export default function BookPage() {
                 <span className="book-status-arrow"><LiaArrowRightSolid/></span>
               </>
             }
-            <div className="book-status-tag">
+            <div
+              className="book-status-tag"
+              style={{
+                backgroundColor: `rgba(${STATUS[book.status].color}, 0.5)`
+              }}
+            >
               { STATUS[book.status].icon }
               { STATUS[book.status].label }
             </div>

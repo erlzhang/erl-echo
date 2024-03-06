@@ -6,7 +6,6 @@ import Chapter from '@/models/chapter';
 import Button from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import {FiSave, FiTrash2 } from "react-icons/fi";
-import { FcEmptyTrash } from "react-icons/fc";
 
 import Title from '@/components/editor/title'
 import EditableField from '@/components/ui/editable-field';
@@ -78,23 +77,28 @@ export default function ChapterPage(
   }, [book, summary])
 
   const saveContent = useCallback(async () => {
-    return chapter?.saveContent(content)
-      .then(() => {
-        return summary?.updateChapter(params.chapter, {
-          wordCount: getWordCount(content),
-          updatedAt: new Date()
-        }).then(() => {
-          return {
-            msg: '保存成功',
-            payload: chapter
-          }
-        }).catch((e) => {
-          throw({
-            msg: '保存失败'
-          });
-        })
+    // const temp = await _chapter.getTempContent();
+    return chapter?.getTempContent()
+      .then(res => {
+        console.log('content', res.content);
+        return chapter?.saveContent(res.content)
+          .then(() => {
+            return summary?.updateChapter(params.chapter, {
+              wordCount: getWordCount(res.content),
+              updatedAt: new Date()
+            }).then(() => {
+              return {
+                msg: '保存成功',
+                payload: chapter
+              }
+            }).catch((e) => {
+              throw({
+                msg: '保存失败'
+              });
+            })
+          })
       })
-  }, [chapter, content])
+  }, [chapter])
 
   const afterSave = (_chapter) => {
     setChapter(_chapter.clone())

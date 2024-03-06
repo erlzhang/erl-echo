@@ -1,6 +1,6 @@
 import "@/styles/dialog.css";
 import React, { useEffect } from "react";
-import { X } from 'react-feather';
+import { FiX } from "react-icons/fi";
 
 export default function Dialog(
   { children, title, onClose, style }:
@@ -40,7 +40,7 @@ export default function Dialog(
                 className="dialog-close-btn"
                 onClick={onClose}
               >
-                <X></X>
+                <FiX />
               </div>
             }
           </div> :
