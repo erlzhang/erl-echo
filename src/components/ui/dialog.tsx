@@ -18,9 +18,9 @@ export default function Dialog(
       }
     }
 
-    document.addEventListener('keyup', handleKeyUp)
+    document.addEventListener('keydown', handleKeyUp)
     return () => {
-      document.removeEventListener('keyup', handleKeyUp)
+      document.removeEventListener('keydown', handleKeyUp)
     }
   })
 

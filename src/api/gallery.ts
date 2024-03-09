@@ -11,6 +11,14 @@ export function upload(file: any, prefix: string) {
   return axios.post(BASE_URL + '/images', formData);
 }
 
+export function createFolder(prefix: string, name: string) {
+  const formData = new FormData();
+  formData.append('prefix', prefix + name + '/');
+  formData.append('isFolder', '1')
+  return axios.post(BASE_URL + '/images', formData);
+
+}
+
 export async function getImages(prefix: string) {
   return axios.get(BASE_URL +'/images', {
     params: {

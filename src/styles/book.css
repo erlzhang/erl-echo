@@ -106,7 +106,7 @@ li.chapter-item.dragging {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 13px 20px;
+  padding: 12px 20px;
   position: fixed;
   top: 0;
   width: calc(100% - 300px);
@@ -116,6 +116,10 @@ li.chapter-item.dragging {
 .chapter-slug {
   line-height: 1.5rem;
   font-size: 0.85rem;
+}
+.chapter-slug .editable-field {
+  display: flex;
+  align-items: center;
 }
 .chapter-actions {
   display: flex;

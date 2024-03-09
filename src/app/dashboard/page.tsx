@@ -69,7 +69,7 @@ export default function Home() {
     return triggerBuild()
       .then(() => {
         return {
-          msg: '已启动部署，请查收邮件获取当前部署结果！'
+          msg: '已启动部署，部署成功或失败将通过邮件通知！'
         }
       });
   }

@@ -38,6 +38,29 @@ export default class Summary {
     return this._data.get(id);
   }
 
+  getPrefixOfChapter(chapter: Chapter) {
+    let prefix = `/${chapter.book}/`;
+    if (!chapter.level) {
+      return prefix;
+    }
+
+    let parent = null;
+    this.data.some((_chapter) => {
+      if (!_chapter.level) {
+        parent = _chapter.slug;
+      }
+      if (_chapter === chapter) {
+        return true;
+      }
+    });
+
+    if (parent) {
+      prefix += `${parent}/`;
+    }
+
+    return prefix;
+  }
+
   async updateChapter(id: string, obj: any) {
     const chapter = this.getChapter(id);
     chapter.update(obj)

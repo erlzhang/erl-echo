@@ -28,6 +28,7 @@ export default function ChapterPage(
   const [content, setContent] = useState<string>('');
   const [wordCount, setWordCount] = useState<number>(0);
   const [hasChanged, setHasChanged] = useState<boolean>(false);
+  const [prefix, setPrefix] = useState<string>('');
   const editorRef = useRef()
 
   const getContent = async (_chapter) => {
@@ -57,6 +58,12 @@ export default function ChapterPage(
         setContent(_content);
       })
   }, [params.chapter, summary])
+
+  useEffect(() => {
+    if (!summary || !chapter) return;
+
+    setPrefix(summary.getPrefixOfChapter(chapter));
+  }, [summary])
 
   const handleChange = useCallback((_content:string) => {
     chapter?.saveTempContent(_content)
@@ -168,7 +175,7 @@ export default function ChapterPage(
                 value={chapter.slug}
                 name="slug"
                 onChange={handleSlugChange}
-                prefix={`/${chapter.book}/`}
+                prefix={prefix}
                 placeholder=""
               />
             </div>
