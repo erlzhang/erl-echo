@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 
 import Button from '@/components/ui/button';
 
-import Book, { Status } from '@/models/book';
-import { STATUS } from '@/const/book';
+import Book, { Status, WritingMode } from '@/models/book';
+import { STATUS, WRITING_MODE } from '@/const/book';
 import { FiPlus } from "react-icons/fi";
 import { GrDeploy } from "react-icons/gr";
 import '@/styles/app.css';
@@ -23,6 +23,7 @@ export default function Home() {
   const [maxIndex, setMaxIndex] = useState<number>(0);
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [status, setStatus] = useState<null|Status>(null)
+  const [mode, setMode] = useState<null|WritingMode>(null)
   
   const router = useRouter();
 
@@ -42,10 +43,29 @@ export default function Home() {
     return (
       <div
         className={`status-filter-tag${status === _status ? ' active' : ''}`}
-        onClick={() => setStatus(_status)}
+        onClick={() => {
+          setStatus(_status)
+          setMode(null)
+        }}
       >
         { STATUS[_status].label }
         <span className="status-filter-count">{ n }</span>
+      </div>
+    )
+  })
+
+  const modes = Object.keys(WRITING_MODE).map((key) => {
+    const _mode = Number(key) as WritingMode;
+
+    return (
+      <div
+        className={`status-filter-tag${mode === _mode ? ' active' : ''}`}
+        onClick={() => {
+          setMode(_mode)
+          setStatus(null)
+        }}
+      >
+        { WRITING_MODE[_mode].label }
       </div>
     )
   })
@@ -81,19 +101,22 @@ export default function Home() {
         <div className="top-actions-left">
           <div className="status-filter">
             <span
-              className={`status-filter-tag${status == null ? ' active' : ''}`}
-              onClick={() => setStatus(null)}
+              className={`status-filter-tag${status == null && mode == null ? ' active' : ''}`}
+              onClick={() => {
+                setStatus(null)
+                setMode(null)
+              }}
             >
               全部
             </span>
             { filters }
+            { modes }
           </div>
-        
         </div>
         <div className="top-actions-center">
           <IoMdFlower/>
           总计已撰写
-          { sumBy(books, (b: Book) => b.wordCount || 0) }
+          { sumBy(books.filter(b => (status == null || status === b.status) && (mode == null || mode === b.writingMode)), (b: Book) => b.wordCount || 0) }
           字，继续努力！
         </div>
         <div className="top-actions-right">
@@ -117,7 +140,7 @@ export default function Home() {
         </div>
       </div>
       <CardView
-        books={books.filter(b => status == null || status === b.status)}
+        books={books.filter(b => (status == null || status === b.status) && (mode == null || mode === b.writingMode))}
       />
       {
         showDialog &&
