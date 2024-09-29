@@ -30,8 +30,8 @@ export default function BookPage() {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    book?.update({ [name]: value })
+    const { name, value, type } = e.target;
+    book?.update({ [name]: type === 'number' ? Number(value) : value })
       .then(res => {
         updateBook(book);
       });
