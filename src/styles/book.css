@@ -164,6 +164,9 @@ li.chapter-item.dragging {
   color: var(--gray);
   margin-bottom: 20px;
 }
+.book-tags {
+  display: flex;
+}
 .book-tag {
   margin-right: 15px;
   display: inline-block;
@@ -176,6 +179,22 @@ li.chapter-item.dragging {
 .book-tag svg {
   margin-right: 5px;
 }
+.book-date {
+  display: flex;
+  margin-left: 15px;
+}
+.book-date .editable-field {
+  border: 1px solid var(--lighter);
+  text-align: center;
+  width: 80px;
+  border-radius: 4px;
+}
+.book-date .editable-field input {
+  padding: 0;
+}
+/* .book-date .editable-field .hover-btn {
+  margin: 0;
+} */
 .word-count {
   font-size: 0.875rem;
   margin-right: 15px;
