@@ -134,6 +134,22 @@ export default function BookPage() {
                 }
                 onChange={handleChange}
               ></Select>
+              <div className="book-date">
+                <EditableField
+                  value={book.start}
+                  name="start"
+                  type="number"
+                  onChange={handleChange}
+                ></EditableField>
+                -
+                <EditableField
+                  value={book.end}
+                  name="end"
+                  type="number"
+                  placeholder="未知"
+                  onChange={handleChange}
+                ></EditableField>
+              </div>
             </div>
           </div>
           <div className="book-status">

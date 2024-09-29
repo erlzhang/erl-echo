@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { TbEdit } from "react-icons/tb";
 
 export default function({ value, onChange, name, placeholder = "", prefix = "", type = "text" }: {
-  value: string,
+  value: string | number,
   onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>,
   name: string,
   placeholder: string,
@@ -11,7 +11,7 @@ export default function({ value, onChange, name, placeholder = "", prefix = "", 
 }) {
   const ref = useRef(null)
   const [editable, setEditable] = useState<boolean>(false)
-  const [val, setVal] = useState<string>('')
+  const [val, setVal] = useState<string|number>('')
 
   useEffect(() => {
     setVal(value);
@@ -49,12 +49,13 @@ export default function({ value, onChange, name, placeholder = "", prefix = "", 
         editable ?
         <>
           {
-            type === 'text' ? 
+            type === 'text' || type === 'number' ? 
             <input
               className="form-control"
               name={name}
               value={val}
               ref={ref}
+              type={type}
               onChange={(e) => setVal(e.target.value)}
               onBlur={(e) => {
                 onChange(e)
@@ -79,7 +80,7 @@ export default function({ value, onChange, name, placeholder = "", prefix = "", 
             value ?
             <>
               {
-                value.split('\n').length > 1 ? 
+                value.split && value.split('\n').length > 1 ? 
                 value.split('\n').map((line, index) => {
                   return (
                     <p>
@@ -105,7 +106,7 @@ export default function({ value, onChange, name, placeholder = "", prefix = "", 
             </span>
           }
           {
-            value && value.split('\n').length <= 1 &&
+            (!value || !value.split || value.split('\n').length <= 1) &&
             <button
               className="hover-btn"
               onClick={() => setEditable(true)}
